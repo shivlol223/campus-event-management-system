@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Admin Event Management</h1>
+<div class="card" style="margin-bottom: 30px;">
+    <h3>Add New Event</h3>
+    <form method="POST">
+        <input type="hidden" name="action" value="add">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
+            <input type="text" name="name" placeholder="Event Name" required style="padding: 8px;">
+            <input type="date" name="event_date" required style="padding: 8px;">
+            <input type="text" name="venue" placeholder="Venue" required style="padding: 8px;">
+            <input type="text" name="organizer" placeholder="Organizer" required style="padding: 8px;">
+            <input type="number" name="available_seats" placeholder="Available Seats" required style="padding: 8px;">
+        </div>
+        <textarea name="description" placeholder="Event Description" rows="3" style="width: 100%; padding: 8px; margin-bottom: 10px;" required></textarea>
+        <button type="submit" class="btn">Add Event</button>
+    </form>
+</div>
+
+<h2>Existing Events</h2>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Venue</th>
+        <th>Seats</th>
+        <th>Actions</th>
+    </tr>
+    {% for event in events %}
+    <tr>
+        <td>{{ event.id }}</td>
+        <td>{{ event.name }}</td>
+        <td>{{ event.event_date }}</td>
+        <td>{{ event.venue }}</td>
+        <td>{{ event.available_seats }}</td>
+        <td>
+            <form method="POST" style="display:inline;">
+                <input type="hidden" name="action" value="delete">
+                <input type="hidden" name="event_id" value="{{ event.id }}">
+                <button type="submit" class="btn" style="background-color: #d9534f;" onclick="return confirm('Delete this event?');">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

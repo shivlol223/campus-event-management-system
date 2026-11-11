@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>All College Events</h1>
+<form method="GET" action="{{ url_for('events') }}" style="margin-bottom: 20px;">
+    <input type="text" name="search" value="{{ search }}" placeholder="Search events..." style="padding: 8px; width: 300px;">
+    <button type="submit" class="btn">Search</button>
+</form>
+<div class="card-grid">
+    {% for event in events %}
+    <div class="card">
+        <h3>{{ event.name }}</h3>
+        <p><strong>Date:</strong> {{ event.event_date }}</p>
+        <p><strong>Venue:</strong> {{ event.venue }}</p>
+        <p><strong>Organizer:</strong> {{ event.organizer }}</p>
+        <p><strong>Seats Available:</strong> {{ event.available_seats }}</p>
+        <p>{{ event.description }}</p>
+        <a href="{{ url_for('register', event_id=event.id) }}" class="btn">Register</a>
+    </div>
+    {% else %}
+    <p>No events found matching your search.</p>
+    {% endfor %}
+</div>
+{% endblock %}
